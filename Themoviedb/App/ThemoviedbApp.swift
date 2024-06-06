@@ -8,10 +8,11 @@
 import SwiftUI
 
 @main
-struct ThemoviedbApp: App {
+struct MyApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .background(Color.gray)
         }
     }
 }
