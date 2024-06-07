@@ -7,18 +7,14 @@
 
 import Foundation
 
-struct Movie: Decodable, Identifiable {
+struct Movie: Decodable, Identifiable, Hashable {
     let id: Int
     let title: String
-    let releaseDate: String
-    let voteAverage: Double
     let posterPath: String?
     
     private enum CodingKeys: String, CodingKey {
         case id
         case title
-        case releaseDate = "release_date"
-        case voteAverage = "vote_average"
         case posterPath = "poster_path"
     }
     
@@ -30,7 +26,14 @@ struct Movie: Decodable, Identifiable {
     }
 }
 
-
 struct MoviesResponse: Decodable {
     let results: [Movie]
+}
+
+extension Array {
+    func chunked(into size: Int) -> [[Element]] {
+        return stride(from: 0, to: count, by: size).map {
+            Array(self[$0 ..< Swift.min($0 + size, count)])
+        }
+    }
 }

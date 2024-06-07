@@ -11,15 +11,15 @@ struct MovieCell: View {
     let movie: Movie
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8)
-        {
+        VStack(spacing: 8) {
             posterView
-            detailsView
+                .frame(width: 100, height: 145.92) // Fixed size for the poster
+            titleView
+                .frame(width: 100) // Limiting the width of text to 100px
         }
+        .padding(8)
         .background(Color.white)
-        .cornerRadius(10)
-        .shadow(radius: 5)
-        .padding()
+        .cornerRadius(16)
     }
     
     private var posterView: some View {
@@ -28,38 +28,38 @@ struct MovieCell: View {
                 AsyncImage(url: posterURL) { image in
                     image
                         .resizable()
-                        .aspectRatio(contentMode: .fill)
+                        .cornerRadius(16) // Adjusted corner radius
                 } placeholder: {
                     Color.gray
+                        .cornerRadius(16) // Adjusted corner radius
                 }
-                .frame(maxWidth: .infinity, maxHeight: 200)
-                .clipped()
             } else {
                 Color.gray
-                    .frame(maxWidth: .infinity, maxHeight: 200)
+                    .cornerRadius(16) // Adjusted corner radius
             }
         }
     }
     
-    private var detailsView: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            
-            Text(movie.title)
-                .font(.headline)
-                .lineLimit(2)
-            
-            Text(movie.releaseDate)
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-            
-            HStack {
-                Image(systemName: "star.fill")
-                    .foregroundColor(.yellow)
-                
-                Text(String(format: "%.1f", movie.voteAverage))
-                    .foregroundColor(.secondary)
-            }
-        }
-        .padding()
+    private var titleView: some View {
+        Text(movie.title)
+            .font(.system(size: 12))
+            .lineLimit(2) // Limiting to 2 lines
+            .multilineTextAlignment(.center)
+            .minimumScaleFactor(0.5) // Allow text to scale down if needed
+            .padding(.horizontal, 8) // Adding horizontal padding to center the text
+    }
+}
+
+
+
+
+
+struct MovieCell_Previews: PreviewProvider {
+    static var previews: some View {
+        let sampleMovie = Movie(id: 1, title: "Sample Movie", posterPath: "poster1.jpg")
+        return MovieCell(movie: sampleMovie)
+            .previewLayout(.sizeThatFits)
+            .padding()
+            .background(Color.gray)
     }
 }

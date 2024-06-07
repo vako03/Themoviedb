@@ -12,14 +12,9 @@ class MoviesViewModel: ObservableObject {
     @Published var movies: [Movie] = []
     private let networkManager = NetworkManager<MoviesResponse>()
     
-    func fetchMovies(page: Int) {
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=efd9612c65e2c9429f246e3cb4325002&page=\(page)") else {
-            return
-        }
-        networkManager.fetch(url: url)
-    }
-    
     init() {
+        fetchMovies()
+        
         networkManager.$result
             .sink { [weak self] result in
                 switch result {
@@ -32,5 +27,12 @@ class MoviesViewModel: ObservableObject {
                 }
             }
             .store(in: &networkManager.cancellables)
+    }
+    
+    func fetchMovies() {
+        guard let url = URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=efd9612c65e2c9429f246e3cb4325002") else {
+            return
+        }
+        networkManager.fetch(url: url)
     }
 }

@@ -8,25 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var viewModel = ContentViewModel()
+    
     var body: some View {
-        TabView {
-            MoviesCollectionView()
-                .tabItem {
-                    Label("Movies", systemImage: "film")
-                }
-            
-            SearchView()
-                .tabItem {
-                    Label("Search", systemImage: "magnifyingglass")
-                }
+        VStack {
+            if viewModel.showSplash {
+                SplashScreenView()
+            } else {
+                MainTabView()
+            }
         }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
 }
+

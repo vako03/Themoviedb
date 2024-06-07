@@ -18,7 +18,7 @@ struct SearchView: View {
             VStack {
                 movieScrollView
             }
-            .navigationTitle("Search Movies")
+            .navigationTitle("Search")
             .searchable(text: $viewModel.query, prompt: "Search for a movie")
         }
     }
