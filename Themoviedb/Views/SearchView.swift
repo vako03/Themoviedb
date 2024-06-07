@@ -25,6 +25,18 @@ struct SearchView: View {
                         .padding(.vertical, 10)
                         .background(Color.secondary.opacity(0.2))
                         .cornerRadius(8)
+                        .overlay(
+                            HStack {
+                                Spacer()
+                                Image(systemName: "magnifyingglass")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 20, height: 20)
+                                    .padding(.trailing, 10) // Adjust the padding as needed
+                                    .foregroundColor(colorScheme == .dark ? .white : .black) // Set the tint color based on color scheme
+                            }
+                            .padding(.trailing, 10)
+                        )
                     
                     Button(action: {
                         viewModel.isShowingOptions.toggle()
