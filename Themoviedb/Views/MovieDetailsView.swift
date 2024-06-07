@@ -40,7 +40,7 @@ struct MovieDetailsView: View {
                                 Image(systemName: "calendar")
                                     .resizable()
                                     .frame(width: 16, height: 16)
-                                Text("\(releaseDate.year) |")
+                                Text(" \(releaseDate.year) |")
                             }
                         }
 
@@ -49,7 +49,7 @@ struct MovieDetailsView: View {
                                 Image("tick")
                                     .resizable()
                                     .frame(width: 16, height: 16)
-                                Text("\(voteCount) |")
+                                Text(" \(voteCount) |")
                             }
                         }
 

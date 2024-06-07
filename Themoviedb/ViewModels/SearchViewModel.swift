@@ -11,6 +11,9 @@ import Combine
 class SearchViewModel: ObservableObject {
     @Published var query: String = ""
     @Published var movies: [Movie] = []
+    @Published var selectedOption: SearchOption = .name
+    @Published var isShowingOptions: Bool = false
+    
     private var cancellables = Set<AnyCancellable>()
     private let networkManager = NetworkManager<MoviesResponse>()
     
@@ -30,8 +33,19 @@ class SearchViewModel: ObservableObject {
             return
         }
         
-        let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        guard let url = URL(string: "https://api.themoviedb.org/3/search/movie?api_key=efd9612c65e2c9429f246e3cb4325002&query=\(encodedQuery)") else {
+        var urlString = "https://api.themoviedb.org/3/search/movie?api_key=efd9612c65e2c9429f246e3cb4325002&query=\(query)"
+        
+        switch selectedOption {
+        case .name:
+            urlString += "&searchBy=name"
+        case .genre:
+            urlString += "&searchBy=genre"
+        case .releaseYear:
+            urlString += "&searchBy=release_year"
+        }
+        
+        guard let encodedQuery = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+              let url = URL(string: encodedQuery) else {
             return
         }
         

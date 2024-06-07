@@ -12,14 +12,63 @@ struct SearchView: View {
     @StateObject private var viewModel = SearchViewModel()
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @ScaledMetric var cellFontSize: CGFloat = 16
+    @State private var isButtonClicked = false
     
     var body: some View {
         NavigationView {
             VStack {
+                HStack {
+                    TextField("Search for a movie", text: $viewModel.query)
+                        .padding(.horizontal)
+                        .padding(.vertical, 10)
+                        .background(Color.secondary.opacity(0.2))
+                        .cornerRadius(8)
+                    
+                    Button(action: {
+                        viewModel.isShowingOptions.toggle()
+                        isButtonClicked.toggle()
+                    }) {
+                        Image("ellipsis")
+                            .foregroundColor(isButtonClicked ? Color.gray : Color.primary) // Change image color
+                            .padding(.horizontal)
+                            .padding(.vertical, 10)
+                    }
+                    .buttonStyle(BorderlessButtonStyle())
+                }
+                .padding(.horizontal)
+                .padding(.top, 10)
+                
+                if viewModel.isShowingOptions {
+                    VStack {
+                        ForEach(SearchOption.allCases, id: \.self) { option in
+                            Button(action: {
+                                viewModel.selectedOption = option
+                                viewModel.isShowingOptions.toggle()
+                            }) {
+                                HStack {
+                                    Text(option.description)
+                                    Spacer()
+                                    if viewModel.selectedOption == option {
+                                        Image(systemName: "checkmark")
+                                            .foregroundColor(.blue)
+                                    }
+                                }
+                                .padding(.horizontal)
+                                .padding(.vertical, 5)
+                            }
+                            .foregroundColor(.primary)
+                            .buttonStyle(BorderlessButtonStyle())
+                        }
+                    }
+                    .background(Color.secondary.opacity(0.1))
+                    .cornerRadius(8)
+                    .padding(.horizontal)
+                }
+                
                 movieScrollView
             }
             .navigationTitle("Search")
-            .searchable(text: $viewModel.query, prompt: "Search for a movie")
+            .padding(.bottom)
         }
     }
     
@@ -54,6 +103,25 @@ struct SearchView: View {
             return UIScreen.main.bounds.width - 30
         } else {
             return (UIScreen.main.bounds.width - 50) / 2
+        }
+    }
+}
+
+enum SearchOption: String, CaseIterable, Identifiable {
+    case name
+    case genre
+    case releaseYear
+    
+    var id: String { self.rawValue }
+    
+    var description: String {
+        switch self {
+        case .name:
+            return "Name"
+        case .genre:
+            return "Genre"
+        case .releaseYear:
+            return "Release Year"
         }
     }
 }
