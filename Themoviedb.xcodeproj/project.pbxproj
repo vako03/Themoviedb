@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A108B322C13959B001CBB7C /* SearchMovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A108B312C13959B001CBB7C /* SearchMovieCell.swift */; };
 		1A76C9252C1052D900808C54 /* ThemoviedbApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A76C9242C1052D900808C54 /* ThemoviedbApp.swift */; };
 		1A76C9292C1052DA00808C54 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A76C9282C1052DA00808C54 /* Assets.xcassets */; };
 		1A76C92C2C1052DA00808C54 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A76C92B2C1052DA00808C54 /* Preview Assets.xcassets */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1A108B312C13959B001CBB7C /* SearchMovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMovieCell.swift; sourceTree = "<group>"; };
 		1A76C9212C1052D900808C54 /* Themoviedb.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Themoviedb.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A76C9242C1052D900808C54 /* ThemoviedbApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemoviedbApp.swift; sourceTree = "<group>"; };
 		1A76C9282C1052DA00808C54 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				1A76C9422C10561D00808C54 /* SearchView.swift */,
 				1A76C9802C117D0100808C54 /* Networking */,
 				1A76C98E2C13234300808C54 /* MovieDetailsView.swift */,
+				1A108B312C13959B001CBB7C /* SearchMovieCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 				1A76C9412C10561300808C54 /* SearchViewModel.swift in Sources */,
 				1A76C93D2C1055F600808C54 /* MovieCell.swift in Sources */,
 				1A76C9452C10562A00808C54 /* ContentView.swift in Sources */,
+				1A108B322C13959B001CBB7C /* SearchMovieCell.swift in Sources */,
 				1A76C9252C1052D900808C54 /* ThemoviedbApp.swift in Sources */,
 				1A76C9842C12774E00808C54 /* ContentViewModel.swift in Sources */,
 				1A76C98F2C13234300808C54 /* MovieDetailsView.swift in Sources */,

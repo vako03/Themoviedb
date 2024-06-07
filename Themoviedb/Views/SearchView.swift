@@ -16,7 +16,8 @@ struct SearchView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
+            VStack(spacing: 0) {
+                // Search bar and options
                 HStack {
                     TextField("Search for a movie", text: $viewModel.query)
                         .padding(.horizontal)
@@ -35,8 +36,6 @@ struct SearchView: View {
                             .padding(.vertical, 10)
                     }
                     .buttonStyle(BorderlessButtonStyle())
-
-
                 }
                 .padding(.horizontal)
                 .padding(.top, 10)
@@ -64,50 +63,24 @@ struct SearchView: View {
                             .buttonStyle(BorderlessButtonStyle())
                         }
                     }
-
                     .background(Color.secondary.opacity(0.1))
                     .cornerRadius(8)
                     .padding(.horizontal)
                 }
                 
-                movieScrollView
+                // Vertical scrollable grid for movies
+                ScrollView(.vertical) {
+                    LazyVStack(spacing: 24) {
+                        ForEach(viewModel.movies) { movie in
+                            SearchMovieCell(movie: movie)
+                                .frame(width: 307, height: 120) // Set the width and height of each cell
+                        }
+                    }
+                    .padding([.horizontal, .bottom])
+                }
+                .frame(maxWidth: .infinity)
             }
             .navigationTitle("Search")
-            .padding(.bottom)
-        }
-    }
-    
-    private var movieScrollView: some View {
-        ScrollView {
-            LazyVGrid(columns: gridColumns(), spacing: 10) {
-                ForEach(viewModel.movies) { movie in
-                    MovieCell(movie: movie)
-                        .font(.system(size: cellFontSize))
-                        .frame(width: gridSize(), height: 250)
-                }
-            }
-            .padding()
-        }
-    }
-    
-    private func gridColumns() -> [GridItem] {
-        if horizontalSizeClass == .compact {
-            return [
-                GridItem(.adaptive(minimum: gridSize()))
-            ]
-        } else {
-            return [
-                GridItem(.adaptive(minimum: gridSize())),
-                GridItem(.adaptive(minimum: gridSize()))
-            ]
-        }
-    }
-    
-    private func gridSize() -> CGFloat {
-        if horizontalSizeClass == .compact {
-            return UIScreen.main.bounds.width - 30
-        } else {
-            return (UIScreen.main.bounds.width - 50) / 2
         }
     }
 }
