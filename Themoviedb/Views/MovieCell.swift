@@ -18,7 +18,6 @@ struct MovieCell: View {
                 .frame(width: 100) // Limiting the width of text to 100px
         }
         .padding(8)
-        .background(Color.white)
         .cornerRadius(16)
     }
     
@@ -47,19 +46,6 @@ struct MovieCell: View {
             .multilineTextAlignment(.center)
             .minimumScaleFactor(0.5) // Allow text to scale down if needed
             .padding(.horizontal, 8) // Adding horizontal padding to center the text
-    }
-}
-
-
-
-
-
-struct MovieCell_Previews: PreviewProvider {
-    static var previews: some View {
-        let sampleMovie = Movie(id: 1, title: "Sample Movie", posterPath: "poster1.jpg")
-        return MovieCell(movie: sampleMovie)
-            .previewLayout(.sizeThatFits)
-            .padding()
-            .background(Color.gray)
+            .foregroundColor(Color(UIColor.label)) // Use system color for text
     }
 }

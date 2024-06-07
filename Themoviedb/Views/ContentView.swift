@@ -11,7 +11,7 @@ struct ContentView: View {
     @StateObject private var viewModel = ContentViewModel()
     
     var body: some View {
-        VStack {
+        NavigationView {
             if viewModel.showSplash {
                 SplashScreenView()
             } else {
@@ -21,9 +21,9 @@ struct ContentView: View {
     }
 }
 
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
 }
-

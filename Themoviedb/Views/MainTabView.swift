@@ -8,6 +8,8 @@
 import SwiftUI
 
 
+import SwiftUI
+
 struct MainTabView: View {
     @State private var selection = 0 // State to track selected tab
     
@@ -32,6 +34,5 @@ struct MainTabView: View {
                 .tag(1) // Tag this view with index 1
         }
         .navigationViewStyle(StackNavigationViewStyle())
-        
     }
 }

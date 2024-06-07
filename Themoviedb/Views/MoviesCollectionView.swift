@@ -16,8 +16,10 @@ struct MoviesCollectionView: View {
             ScrollView {
                 LazyVGrid(columns: rows, spacing: 10) { // Vertical LazyVGrid
                     ForEach(viewModel.movies) { movie in
-                        MovieCell(movie: movie)
-                            .frame(maxWidth: .infinity) // Expand cell to fill row
+                        NavigationLink(destination: MovieDetailsView(movie: movie)) {
+                            MovieCell(movie: movie)
+                                .frame(maxWidth: .infinity) // Expand cell to fill row
+                        }
                     }
                 }
                 .padding()
