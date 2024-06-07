@@ -29,11 +29,14 @@ struct SearchView: View {
                         isButtonClicked.toggle()
                     }) {
                         Image("ellipsis")
-                            .foregroundColor(isButtonClicked ? Color.gray : Color.primary) // Change image color
+                            .renderingMode(.template) // Set rendering mode to adjust tint color
+                            .foregroundColor(isButtonClicked ? Color.gray : Color.primary) // Use system colors for better compatibility
                             .padding(.horizontal)
                             .padding(.vertical, 10)
                     }
                     .buttonStyle(BorderlessButtonStyle())
+
+
                 }
                 .padding(.horizontal)
                 .padding(.top, 10)
@@ -44,6 +47,7 @@ struct SearchView: View {
                             Button(action: {
                                 viewModel.selectedOption = option
                                 viewModel.isShowingOptions.toggle()
+                                isButtonClicked = false // Reset the button state
                             }) {
                                 HStack {
                                     Text(option.description)
@@ -60,6 +64,7 @@ struct SearchView: View {
                             .buttonStyle(BorderlessButtonStyle())
                         }
                     }
+
                     .background(Color.secondary.opacity(0.1))
                     .cornerRadius(8)
                     .padding(.horizontal)
