@@ -10,7 +10,7 @@ struct MovieDetailsView: View {
     let movie: Movie
     @State private var screenWidth: CGFloat = 0
     @Environment(\.colorScheme) var colorScheme // Access color scheme
-
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
@@ -18,11 +18,11 @@ struct MovieDetailsView: View {
                     coverImageView
                         .frame(height: 210.94)
                         .cornerRadius(16, corners: [.bottomLeft, .bottomRight])
-
+                    
                     movieImageView
                         .frame(width: 95, height: 120)
                         .offset(x: 16, y: 60)
-
+                    
                     Text(movie.title)
                         .font(.system(size: 18, weight: .bold))
                         .foregroundColor(Color(UIColor.label))
@@ -31,7 +31,7 @@ struct MovieDetailsView: View {
                         .offset(x: 110, y: 60)
                 }
                 .padding(.bottom, 70)
-
+                
                 GeometryReader { geometry in
                     HStack {
                         Spacer()
@@ -43,16 +43,17 @@ struct MovieDetailsView: View {
                                 Text(" \(releaseDate.year) |")
                             }
                         }
-
+                        
                         if let voteCount = movie.voteCount {
                             HStack {
-                                Image("tick")
+                                Image(systemName: colorScheme == .dark ? "person.2.fill" : "person.2")
                                     .resizable()
                                     .frame(width: 16, height: 16)
                                 Text(" \(voteCount) |")
                             }
                         }
-
+                        
+                        
                         if let originalLanguage = movie.originalLanguage {
                             HStack {
                                 Image(systemName: "globe")
@@ -69,17 +70,17 @@ struct MovieDetailsView: View {
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .padding(.horizontal, 16) // Added horizontal padding
-
+                
                 Text("About Movie")
                     .font(.system(size: 16))
                     .foregroundColor(colorScheme == .dark ? .white : .black) // Change color based on color scheme
                     .padding(.horizontal, 16)
-
+                
                 Rectangle()
                     .frame(width: 327, height: 4)
                     .foregroundColor(Color.gray)
                     .padding(.horizontal, 16)
-
+                
                 if let overview = movie.overview {
                     Text(overview)
                         .font(.body)
@@ -96,9 +97,9 @@ struct MovieDetailsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .background(Color.clear)
     }
-
-
-
+    
+    
+    
     private var coverImageView: some View {
         ZStack(alignment: .bottomTrailing) {
             Group {
@@ -127,14 +128,14 @@ struct MovieDetailsView: View {
                 }
             }
             .cornerRadius(16, corners: [.bottomLeft, .bottomRight])
-
+            
             if let voteAverage = movie.voteAverage {
                 HStack {
                     Image(systemName: "star")
                         .resizable()
                         .frame(width: 12, height: 12)
                         .foregroundColor(Color(hex: "#FF8700"))
-
+                    
                     Text(String(format: "%.1f", voteAverage))
                         .font(.system(size: 12))
                         .foregroundColor(Color(hex: "#FF8700"))
@@ -147,7 +148,7 @@ struct MovieDetailsView: View {
             }
         }
     }
-
+    
     private var movieImageView: some View {
         Group {
             if let posterURL = movie.posterURL {
@@ -236,7 +237,7 @@ struct MovieDetailsView_Previews: PreviewProvider {
             voteCount: 1500,
             originalLanguage: "en"
         )
-
+        
         MovieDetailsView(movie: sampleMovie)
             .preferredColorScheme(.light)
     }

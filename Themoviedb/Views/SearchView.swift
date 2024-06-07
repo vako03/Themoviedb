@@ -11,6 +11,7 @@ struct SearchView: View {
     
     @StateObject private var viewModel = SearchViewModel()
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(\.colorScheme) var colorScheme // Access color scheme
     @ScaledMetric var cellFontSize: CGFloat = 16
     @State private var isButtonClicked = false
     
@@ -68,19 +69,53 @@ struct SearchView: View {
                     .padding(.horizontal)
                 }
                 
-                // Vertical scrollable grid for movies
-                ScrollView(.vertical) {
-                    LazyVStack(spacing: 24) {
-                        ForEach(viewModel.movies) { movie in
-                            SearchMovieCell(movie: movie)
-                                .frame(width: 307, height: 120) // Set the width and height of each cell
-                        }
+                if viewModel.query.isEmpty {
+                    VStack {
+                        Text("Use The Magic Search!")
+                            .font(.system(size: 16))
+                            .foregroundColor(colorScheme == .dark ? .white : .black) // Change color based on color scheme
+                            .padding(.bottom, 4)
+                        
+                        Text("I will do my best to search everything\nrelevant, I promise!")
+                            .font(.system(size: 12))
+                            .foregroundColor(Color(hex: "#92929D")) // Apply custom color
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal)
                     }
-                    .padding([.horizontal, .bottom])
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    if viewModel.movies.isEmpty {
+                        VStack {
+                            Text("Oh No Isn’t This So \nEmbarrassing?")
+                                .font(.system(size: 16))
+                                .foregroundColor(colorScheme == .dark ? .white : .black) // Change color based on color scheme
+                                .multilineTextAlignment(.center)
+                                .padding(.bottom, 4)
+                            
+                            Text("I cannot find any movie with this name.")
+                                .font(.system(size: 12))
+                                .foregroundColor(Color(hex: "#92929D")) // Apply custom color
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal)
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    } else {
+                        // Vertical scrollable grid for movies
+                        ScrollView {
+                            LazyVStack(spacing: 24) {
+                                ForEach(viewModel.movies) { movie in
+                                    SearchMovieCell(movie: movie)
+                                        .frame(width: 307, height: 120) // Set the width and height of each cell
+                                }
+                            }
+                            .padding()
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
                 }
-                .frame(maxWidth: .infinity)
             }
             .navigationTitle("Search")
+            .padding(.bottom)
         }
     }
 }
