@@ -9,7 +9,7 @@ import SwiftUI
 struct MovieDetailsView: View {
     let movie: Movie
     @State private var screenWidth: CGFloat = 0
-    @Environment(\.colorScheme) var colorScheme // Access color scheme
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         ScrollView {
@@ -53,7 +53,6 @@ struct MovieDetailsView: View {
                             }
                         }
                         
-                        
                         if let originalLanguage = movie.originalLanguage {
                             HStack {
                                 Image(systemName: "globe")
@@ -64,16 +63,16 @@ struct MovieDetailsView: View {
                         }
                         Spacer()
                     }
-                    .frame(width: geometry.size.width - 32) // Adjusted frame width to add space on both sides
+                    .frame(width: geometry.size.width - 32)
                 }
-                .frame(height: 24) // Ensure the GeometryReader doesn't take unnecessary space
+                .frame(height: 24)
                 .font(.caption)
                 .foregroundColor(.secondary)
-                .padding(.horizontal, 16) // Added horizontal padding
+                .padding(.horizontal, 16)
                 
                 Text("About Movie")
                     .font(.system(size: 16))
-                    .foregroundColor(colorScheme == .dark ? .white : .black) // Change color based on color scheme
+                    .foregroundColor(colorScheme == .dark ? .white : .black)
                     .padding(.horizontal, 16)
                 
                 Rectangle()
@@ -84,7 +83,7 @@ struct MovieDetailsView: View {
                 if let overview = movie.overview {
                     Text(overview)
                         .font(.body)
-                        .foregroundColor(colorScheme == .dark ? .white : .black) // Change color based on color scheme
+                        .foregroundColor(colorScheme == .dark ? .white : .black)
                         .padding(.horizontal, 16)
                 }
             }
@@ -97,8 +96,6 @@ struct MovieDetailsView: View {
         .navigationBarTitleDisplayMode(.inline)
         .background(Color.clear)
     }
-    
-    
     
     private var coverImageView: some View {
         ZStack(alignment: .bottomTrailing) {
@@ -182,42 +179,6 @@ struct MovieDetailsView: View {
                     .shadow(radius: 5)
             }
         }
-    }
-}
-
-extension String {
-    var year: String {
-        let components = self.components(separatedBy: "-")
-        if let year = components.first {
-            return year
-        }
-        return ""
-    }
-}
-
-extension Color {
-    init(hex: String) {
-        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
-        var int: UInt64 = 0
-        Scanner(string: hex).scanHexInt64(&int)
-        let a, r, g, b: UInt64
-        switch hex.count {
-        case 3: // RGB (12-bit)
-            (a, r, g, b) = (255, (int >> 8 * 17), (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
-        case 6: // RGB (24-bit)
-            (a, r, g, b) = (255, (int >> 16), (int >> 8 & 0xFF), (int & 0xFF))
-        case 8: // ARGB (32-bit)
-            (a, r, g, b) = ((int >> 24), (int >> 16 & 0xFF), (int >> 8 & 0xFF), (int & 0xFF))
-        default:
-            (a, r, g, b) = (255, 0, 0, 0)
-        }
-        self.init(
-            .sRGB,
-            red: Double(r) / 255,
-            green: Double(g) / 255,
-            blue: Double(b) / 255,
-            opacity: Double(a) / 255
-        )
     }
 }
 

@@ -11,7 +11,7 @@ struct SearchMovieCell: View {
     
     var body: some View {
         GeometryReader { geometry in
-            HStack(alignment: .top) { // Align content to the top
+            HStack(alignment: .top) { 
                 if let posterURL = movie.posterURL {
                     AsyncImage(url: posterURL) { image in
                         image
@@ -52,11 +52,11 @@ struct SearchMovieCell: View {
                             .foregroundColor(.secondary)
                     }
                 }
-                .frame(maxWidth: .infinity, alignment: .leading) // Expand the VStack to the left
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
             .frame(height: 120)
             .padding(8)
-            .cornerRadius(8) // Remove background color and keep only corner radius
+            .cornerRadius(8)
         }
     }
 }

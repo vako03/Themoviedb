@@ -11,29 +11,29 @@ struct Movie: Decodable, Identifiable, Hashable {
     let id: Int
     let title: String
     let posterPath: String?
-    let backdropPath: String? // Add backdrop_path property
+    let backdropPath: String?
     let overview: String?
     let releaseDate: String?
     let voteAverage: Double?
     let runtime: Int?
-    let language: String? // Add language property
-    let popularity: Double? // Add popularity property
-    let voteCount: Int? // Add vote_count property
-    let originalLanguage: String? // Add original_language property
+    let language: String?
+    let popularity: Double?
+    let voteCount: Int?
+    let originalLanguage: String? 
     
     private enum CodingKeys: String, CodingKey {
         case id
         case title
         case posterPath = "poster_path"
-        case backdropPath = "backdrop_path" // Map to the correct JSON key
+        case backdropPath = "backdrop_path"
         case overview
         case releaseDate = "release_date"
         case voteAverage = "vote_average"
         case runtime
-        case language // Add language case
-        case popularity // Add popularity case
-        case voteCount = "vote_count" // Map to the correct JSON key
-        case originalLanguage = "original_language" // Map to the correct JSON key
+        case language
+        case popularity
+        case voteCount = "vote_count"
+        case originalLanguage = "original_language"
     }
     
     var posterURL: URL? {

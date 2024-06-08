@@ -11,14 +11,13 @@ struct SearchView: View {
     
     @StateObject private var viewModel = SearchViewModel()
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
-    @Environment(\.colorScheme) var colorScheme // Access color scheme
+    @Environment(\.colorScheme) var colorScheme
     @ScaledMetric var cellFontSize: CGFloat = 16
     @State private var isButtonClicked = false
     
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                // Search bar and options
                 HStack {
                     TextField("Search for a movie", text: $viewModel.query)
                         .padding(.horizontal)
@@ -32,10 +31,10 @@ struct SearchView: View {
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 20, height: 20)
-                                    .padding(.trailing, 10) // Adjust the padding as needed
-                                    .foregroundColor(colorScheme == .dark ? .white : .black) // Set the tint color based on color scheme
+                                    .padding(.trailing, 10)
+                                    .foregroundColor(colorScheme == .dark ? .white : .black)
                             }
-                            .padding(.trailing, 10)
+                                .padding(.trailing, 10)
                         )
                     
                     Button(action: {
@@ -43,8 +42,8 @@ struct SearchView: View {
                         isButtonClicked.toggle()
                     }) {
                         Image("ellipsis")
-                            .renderingMode(.template) // Set rendering mode to adjust tint color
-                            .foregroundColor(isButtonClicked ? Color.gray : Color.primary) // Use system colors for better compatibility
+                            .renderingMode(.template)
+                            .foregroundColor(isButtonClicked ? Color.gray : Color.primary)
                             .padding(.horizontal)
                             .padding(.vertical, 10)
                     }
@@ -59,7 +58,7 @@ struct SearchView: View {
                             Button(action: {
                                 viewModel.selectedOption = option
                                 viewModel.isShowingOptions.toggle()
-                                isButtonClicked = false // Reset the button state
+                                isButtonClicked = false
                             }) {
                                 HStack {
                                     Text(option.description)
@@ -85,12 +84,12 @@ struct SearchView: View {
                     VStack {
                         Text("Use The Magic Search!")
                             .font(.system(size: 16))
-                            .foregroundColor(colorScheme == .dark ? .white : .black) // Change color based on color scheme
+                            .foregroundColor(colorScheme == .dark ? .white : .black)
                             .padding(.bottom, 4)
                         
                         Text("I will do my best to search everything\nrelevant, I promise!")
                             .font(.system(size: 12))
-                            .foregroundColor(Color(hex: "#92929D")) // Apply custom color
+                            .foregroundColor(Color(hex: "#92929D"))
                             .multilineTextAlignment(.center)
                             .padding(.horizontal)
                     }
@@ -100,24 +99,23 @@ struct SearchView: View {
                         VStack {
                             Text("Oh No Isn’t This So \nEmbarrassing?")
                                 .font(.system(size: 16))
-                                .foregroundColor(colorScheme == .dark ? .white : .black) // Change color based on color scheme
+                                .foregroundColor(colorScheme == .dark ? .white : .black)
                                 .multilineTextAlignment(.center)
                                 .padding(.bottom, 4)
                             
                             Text("I cannot find any movie with this name.")
                                 .font(.system(size: 12))
-                                .foregroundColor(Color(hex: "#92929D")) // Apply custom color
+                                .foregroundColor(Color(hex: "#92929D"))
                                 .multilineTextAlignment(.center)
                                 .padding(.horizontal)
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     } else {
-                        // Vertical scrollable grid for movies
                         ScrollView {
                             LazyVStack(spacing: 24) {
                                 ForEach(viewModel.movies) { movie in
                                     SearchMovieCell(movie: movie)
-                                        .frame(width: 307, height: 120) // Set the width and height of each cell
+                                        .frame(width: 307, height: 120)
                                 }
                             }
                             .padding()

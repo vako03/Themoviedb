@@ -13,9 +13,9 @@ struct MovieCell: View {
     var body: some View {
         VStack(spacing: 8) {
             posterView
-                .frame(width: 100, height: 145.92) // Fixed size for the poster
+                .frame(width: 100, height: 145.92)
             titleView
-                .frame(width: 100) // Limiting the width of text to 100px
+                .frame(width: 100)
         }
         .padding(8)
         .cornerRadius(16)
@@ -27,14 +27,14 @@ struct MovieCell: View {
                 AsyncImage(url: posterURL) { image in
                     image
                         .resizable()
-                        .cornerRadius(16) // Adjusted corner radius
+                        .cornerRadius(16)
                 } placeholder: {
                     Color.gray
-                        .cornerRadius(16) // Adjusted corner radius
+                        .cornerRadius(16)
                 }
             } else {
                 Color.gray
-                    .cornerRadius(16) // Adjusted corner radius
+                    .cornerRadius(16)
             }
         }
     }
@@ -42,10 +42,10 @@ struct MovieCell: View {
     private var titleView: some View {
         Text(movie.title)
             .font(.system(size: 12))
-            .lineLimit(2) // Limiting to 2 lines
+            .lineLimit(2)
             .multilineTextAlignment(.center)
-            .minimumScaleFactor(0.5) // Allow text to scale down if needed
-            .padding(.horizontal, 8) // Adding horizontal padding to center the text
-            .foregroundColor(Color(UIColor.label)) // Use system color for text
+            .minimumScaleFactor(0.5)
+            .padding(.horizontal, 8)
+            .foregroundColor(Color(UIColor.label)) 
     }
 }
