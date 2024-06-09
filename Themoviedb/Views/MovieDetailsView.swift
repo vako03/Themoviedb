@@ -4,15 +4,21 @@
 //
 //  Created by valeri mekhashishvili on 07.06.24.
 //
+ 
 import SwiftUI
 
 struct MovieDetailsView: View {
-    @State var movie: Movie // Change to @State variable
+    @State var movie: Movie
     @State private var screenWidth: CGFloat = 0
     @Environment(\.colorScheme) var colorScheme
     @StateObject private var viewModel = MovieDetailsViewModel()
-    @State private var isLiked = false // State to track if the movie is liked
-
+    @State private var isLiked = false
+    
+    // UserDefaults key for storing liked state
+    private var likedKey: String {
+        "liked_\(movie.id)"
+    }
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
@@ -76,6 +82,7 @@ struct MovieDetailsView: View {
                     
                     Button(action: {
                         isLiked.toggle()
+                        updateLikedState()
                     }) {
                         Image(systemName: isLiked ? "heart.fill" : "heart")
                             .resizable()
@@ -102,6 +109,8 @@ struct MovieDetailsView: View {
             .onAppear {
                 screenWidth = UIScreen.main.bounds.width
                 viewModel.fetchMovieDetails(for: movie)
+                // Retrieve liked state from UserDefaults
+                isLiked = UserDefaults.standard.bool(forKey: likedKey)
             }
         }
         .navigationTitle(movie.title)
@@ -109,6 +118,14 @@ struct MovieDetailsView: View {
         .background(Color.clear)
     }
     
+    private func updateLikedState() {
+        UserDefaults.standard.set(isLiked, forKey: likedKey)
+        if isLiked {
+            FavoritesViewModel.shared.addToFavorites(movie)
+        } else {
+            FavoritesViewModel.shared.removeFromFavorites(movie)
+        }
+    }
     
     private var coverImageView: some View {
         ZStack(alignment: .bottomTrailing) {
@@ -193,3 +210,4 @@ struct MovieDetailsView: View {
         }
     }
 }
+

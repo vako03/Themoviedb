@@ -8,17 +8,10 @@
 import SwiftUI
 
 struct FavoriteMovieCell: View {
-    let movie: Movie // Assuming you have a Movie model
+    let movie: Movie
     
     var body: some View {
-        // Custom view for displaying a favorite movie
-        // You can design this based on your requirements
+        // Display favorite movie details
         Text(movie.title)
-    }
-}
-
-struct FavoritesView_Previews: PreviewProvider {
-    static var previews: some View {
-        FavoritesView()
     }
 }

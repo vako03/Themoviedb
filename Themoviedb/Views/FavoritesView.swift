@@ -6,36 +6,31 @@
 //
 
 import SwiftUI
-
 struct FavoritesView: View {
-    @StateObject private var viewModel = FavoritesViewModel()
+    @StateObject private var viewModel = FavoritesViewModel.shared
     @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
         NavigationView {
             VStack {
                 if viewModel.favoriteMovies.isEmpty {
-                    VStack {
-                        Text("No favorites yet")
-                            .font(.system(size: 16))
-                            .padding(.bottom, 4)
-                        Text("All movies marked as favorite will be\n added here.")
-                            .font(.system(size: 12))
-                            .multilineTextAlignment(.center)
-                    }
-                    .padding()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    EmptyFavoritesView()
                 } else {
-                    // Display favorite movies here
-                    Text("List of favorite movies")
+                    ScrollView {
+                        LazyVStack(spacing: 16) {
+                            ForEach(viewModel.favoriteMovies) { movie in
+                                FavoriteMovieCell(movie: movie)
+                            }
+                        }
+                        .padding()
+                    }
                 }
             }
             .navigationTitle("Favorites")
-            .foregroundColor(.primary) // Ensure text color remains unchanged
+            .foregroundColor(.primary)
         }
     }
 }
-
 
 
 struct EmptyFavoritesView: View {

@@ -5,9 +5,22 @@
 //  Created by valeri mekhashishvili on 09.06.24.
 //
 
-import SwiftUI
+import Foundation
 
 class FavoritesViewModel: ObservableObject {
-    // Placeholder for managing favorite movies
-    @Published var favoriteMovies: [Movie] = [] // Assuming you have a Movie model
+    static let shared = FavoritesViewModel()
+    
+    @Published var favoriteMovies: [Movie] = []
+    
+    func addToFavorites(_ movie: Movie) {
+        if !favoriteMovies.contains(movie) {
+            favoriteMovies.append(movie)
+        }
+    }
+    
+    func removeFromFavorites(_ movie: Movie) {
+        if let index = favoriteMovies.firstIndex(of: movie) {
+            favoriteMovies.remove(at: index)
+        }
+    }
 }
