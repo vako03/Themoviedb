@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Movie: Decodable, Identifiable, Hashable {
+struct Movie: Codable, Identifiable, Hashable {
     let id: Int
     let title: String
     let posterPath: String?
@@ -20,7 +20,6 @@ struct Movie: Decodable, Identifiable, Hashable {
     let popularity: Double?
     let voteCount: Int?
     let originalLanguage: String?
-    
     
     private enum CodingKeys: String, CodingKey {
         case id
@@ -65,7 +64,6 @@ struct Genre: Decodable {
     let id: Int
     let name: String
 }
-
 
 extension Array {
     func chunked(into size: Int) -> [[Element]] {

@@ -7,27 +7,21 @@
 
 import SwiftUI
 struct FavoritesView: View {
-    @StateObject private var viewModel = FavoritesViewModel.shared
-    @Environment(\.colorScheme) var colorScheme
-
+    @StateObject private var viewModel = FavoritesViewModel()
+    
     var body: some View {
         NavigationView {
-            VStack {
-                if viewModel.favoriteMovies.isEmpty {
-                    EmptyFavoritesView()
-                } else {
-                    ScrollView {
-                        LazyVStack(spacing: 16) {
-                            ForEach(viewModel.favoriteMovies) { movie in
-                                FavoriteMovieCell(movie: movie)
-                            }
-                        }
-                        .padding()
+            List {
+                ForEach(viewModel.favoriteMovies, id: \.id) { movie in
+                    NavigationLink(destination: MovieDetailsView(movie: movie)) {
+                        FavoriteMovieCell(movie: movie)
                     }
                 }
             }
             .navigationTitle("Favorites")
-            .foregroundColor(.primary)
+        }
+        .onAppear {
+            viewModel.loadFavorites()
         }
     }
 }
