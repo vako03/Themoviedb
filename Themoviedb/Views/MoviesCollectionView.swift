@@ -11,7 +11,7 @@ struct MoviesCollectionView: View {
     let columns: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: 10), count: 3)
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 10) {
                     ForEach(viewModel.movies) { movie in

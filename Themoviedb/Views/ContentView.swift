@@ -11,13 +11,15 @@ struct ContentView: View {
     @StateObject private var viewModel = ContentViewModel()
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             if viewModel.showSplash {
                 SplashScreenView()
             } else {
                 MainTabView()
             }
         }
+        .navigationViewStyle(.stack)
+        .navigationBarHidden(UIDevice.current.userInterfaceIdiom == .pad)
     }
 }
 

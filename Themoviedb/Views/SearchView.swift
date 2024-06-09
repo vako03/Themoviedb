@@ -16,7 +16,7 @@ struct SearchView: View {
     @State private var isButtonClicked = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
                 HStack {
                     TextField("Search for a movie", text: $viewModel.query)
