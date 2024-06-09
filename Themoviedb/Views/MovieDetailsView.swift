@@ -63,7 +63,6 @@ struct MovieDetailsView: View {
                         Image("Ticket")
                         Text(" \(viewModel.genre ?? "") ")
                         
-                        
                         Spacer()
                     }
                     .frame(width: geometry.size.width - 16)
@@ -210,4 +209,3 @@ struct MovieDetailsView: View {
         }
     }
 }
-
