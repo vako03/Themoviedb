@@ -80,7 +80,7 @@ struct SearchMovieCell: View {
                             .resizable()
                             .frame(width: 16, height: 16)
                             .foregroundColor(.secondary)
-                        Text("\(runtime) mins")
+                        Text("Runtime: \(runtime) mins")
                             .font(.system(size: 10))
                             .foregroundColor(.secondary)
                     }
