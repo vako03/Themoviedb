@@ -11,6 +11,7 @@ struct MovieDetailsView: View {
     @State private var screenWidth: CGFloat = 0
     @Environment(\.colorScheme) var colorScheme
     @StateObject private var viewModel = MovieDetailsViewModel()
+    @State private var isLiked = false // State to track if the movie is liked
 
     var body: some View {
         ScrollView {
@@ -66,13 +67,27 @@ struct MovieDetailsView: View {
                 .foregroundColor(.secondary)
                 .padding(.horizontal, 16)
                 
-                Text("About Movie")
-                    .font(.system(size: 16))
-                    .foregroundColor(colorScheme == .dark ? .white : .black)
-                    .padding(.horizontal, 16)
+                HStack {
+                    Text("About Movie")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundColor(colorScheme == .dark ? .white : .black)
+                    
+                    Spacer() // Add Spacer to push the heart button to the right
+                    
+                    Button(action: {
+                        isLiked.toggle()
+                    }) {
+                        Image(systemName: isLiked ? "heart.fill" : "heart")
+                            .resizable()
+                            .foregroundColor(isLiked ? .red : .gray)
+                            .frame(width: 21, height: 20)
+                    }
+                }
+                .padding(.top, 8)
+                .padding(.horizontal, 16)
                 
                 Rectangle()
-                    .frame(width: 327, height: 4)
+                    .frame(width: 350, height: 4)
                     .foregroundColor(Color.gray)
                     .padding(.horizontal, 16)
                 
@@ -177,5 +192,4 @@ struct MovieDetailsView: View {
             }
         }
     }
-    
 }

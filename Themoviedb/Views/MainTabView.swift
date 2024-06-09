@@ -29,7 +29,22 @@ struct MainTabView: View {
                     Text("Search")
                 }
                 .tag(1)
+            
+            FavoritesView()
+                .tabItem {
+                    Image("Save")
+                        .renderingMode(.template)
+                        .foregroundColor(selection == 2 ? Color.blue : Color.gray)
+                    Text("Favorites")
+                }
+                .tag(2)
         }
         .navigationViewStyle(StackNavigationViewStyle())
+    }
+}
+
+struct MainTabView_Previews: PreviewProvider {
+    static var previews: some View {
+        MainTabView()
     }
 }
