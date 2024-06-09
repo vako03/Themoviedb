@@ -15,11 +15,12 @@ struct Movie: Decodable, Identifiable, Hashable {
     let overview: String?
     let releaseDate: String?
     let voteAverage: Double?
-    let runtime: Int?
+    var runtime: Int?
     let language: String?
     let popularity: Double?
     let voteCount: Int?
     let originalLanguage: String? 
+    
     
     private enum CodingKeys: String, CodingKey {
         case id
@@ -54,6 +55,17 @@ struct Movie: Decodable, Identifiable, Hashable {
 struct MoviesResponse: Decodable {
     let results: [Movie]
 }
+
+struct MovieDetails: Decodable {
+    let runtime: Int?
+    let genres: [Genre]?
+}
+
+struct Genre: Decodable {
+    let id: Int
+    let name: String
+}
+
 
 extension Array {
     func chunked(into size: Int) -> [[Element]] {

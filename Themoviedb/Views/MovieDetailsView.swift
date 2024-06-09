@@ -7,10 +7,11 @@
 import SwiftUI
 
 struct MovieDetailsView: View {
-    let movie: Movie
+    @State var movie: Movie // Change to @State variable
     @State private var screenWidth: CGFloat = 0
     @Environment(\.colorScheme) var colorScheme
-    
+    @StateObject private var viewModel = MovieDetailsViewModel()
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
@@ -37,33 +38,28 @@ struct MovieDetailsView: View {
                         Spacer()
                         if let releaseDate = movie.releaseDate {
                             HStack {
-                                Image(systemName: "calendar")
+                                Image("CalendarBlank")
                                     .resizable()
                                     .frame(width: 16, height: 16)
                                 Text(" \(releaseDate.year) |")
                             }
                         }
                         
-                        if let voteCount = movie.voteCount {
+                        if let runtime = viewModel.runtime {
                             HStack {
-                                Image(systemName: colorScheme == .dark ? "person.2.fill" : "person.2")
+                                Image(systemName:"clock")
                                     .resizable()
                                     .frame(width: 16, height: 16)
-                                Text(" \(voteCount) |")
+                                Text("\(runtime) mins |")
                             }
                         }
+                        Image("Ticket")
+                        Text(" \(viewModel.genre ?? "") ")
                         
-                        if let originalLanguage = movie.originalLanguage {
-                            HStack {
-                                Image(systemName: "globe")
-                                    .resizable()
-                                    .frame(width: 16, height: 16)
-                                Text(originalLanguage)
-                            }
-                        }
+                        
                         Spacer()
                     }
-                    .frame(width: geometry.size.width - 32)
+                    .frame(width: geometry.size.width - 16)
                 }
                 .frame(height: 24)
                 .font(.caption)
@@ -90,12 +86,14 @@ struct MovieDetailsView: View {
             .padding()
             .onAppear {
                 screenWidth = UIScreen.main.bounds.width
+                viewModel.fetchMovieDetails(for: movie)
             }
         }
         .navigationTitle(movie.title)
         .navigationBarTitleDisplayMode(.inline)
         .background(Color.clear)
     }
+    
     
     private var coverImageView: some View {
         ZStack(alignment: .bottomTrailing) {
@@ -176,30 +174,8 @@ struct MovieDetailsView: View {
                 Color.gray
                     .frame(width: 95, height: 120)
                     .cornerRadius(16)
-                    .shadow(radius: 5)
             }
         }
     }
-}
-
-struct MovieDetailsView_Previews: PreviewProvider {
-    static var previews: some View {
-        let sampleMovie = Movie(
-            id: 1,
-            title: "Sample Movie",
-            posterPath: "poster1.jpg",
-            backdropPath: "backdrop1.jpg",
-            overview: "This is a sample overview of the movie. It should be a brief description of the movie plot.",
-            releaseDate: "2023-01-01",
-            voteAverage: 4.5,
-            runtime: 120,
-            language: "English",
-            popularity: 8.7,
-            voteCount: 1500,
-            originalLanguage: "en"
-        )
-        
-        MovieDetailsView(movie: sampleMovie)
-            .preferredColorScheme(.light)
-    }
+    
 }

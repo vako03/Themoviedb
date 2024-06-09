@@ -8,60 +8,95 @@ import SwiftUI
 
 struct SearchMovieCell: View {
     let movie: Movie
+    @StateObject private var viewModel = MovieDetailsViewModel()
     
     var body: some View {
-        GeometryReader { geometry in
-            HStack(alignment: .top) { 
-                if let posterURL = movie.posterURL {
-                    AsyncImage(url: posterURL) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 95, height: 120)
-                            .cornerRadius(16)
-                    } placeholder: {
-                        Color.gray
-                            .frame(width: 95, height: 120)
-                            .cornerRadius(16)
-                    }
-                } else {
+        HStack(alignment: .top) {
+            if let posterURL = movie.posterURL {
+                AsyncImage(url: posterURL) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 95, height: 120)
+                        .cornerRadius(16)
+                } placeholder: {
                     Color.gray
                         .frame(width: 95, height: 120)
                         .cornerRadius(16)
                 }
+            } else {
+                Color.gray
+                    .frame(width: 95, height: 120)
+                    .cornerRadius(16)
+            }
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(movie.title)
+                    .font(.headline)
+                    .foregroundColor(.primary)
                 
-                VStack(alignment: .leading) {
-                    Text(movie.title)
-                        .font(.system(size: 12))
-                        .lineLimit(2)
-                        .padding(.top, 4)
-                    
-                    if let releaseDate = movie.releaseDate {
-                        Text("Release Year: \(releaseDate.year)")
+                Spacer(minLength: 4)
+                
+                if let voteAverage = movie.voteAverage {
+                    HStack {
+                        Image(systemName: "star")
+                            .resizable()
+                            .frame(width: 16, height: 16)
+                            .foregroundColor(Color(hex: "#FF8700"))
+                        Text("\(String(format: "%.1f", voteAverage))")
                             .font(.system(size: 10))
-                            .foregroundColor(.secondary)
+                            .foregroundColor(Color(hex: "#FF8700"))
                     }
-                    
-                    if let voteAverage = movie.voteAverage {
-                        Text("Vote Average: \(String(format: "%.1f", voteAverage))")
-                            .font(.system(size: 10))
-                            .foregroundColor(.secondary)
-                    } else {
-                        Text("Vote Average: N/A")
+                } else {
+                    Text("Vote Average: N/A")
+                        .font(.system(size: 10))
+                        .foregroundColor(.secondary)
+                }
+                
+                if let genre = viewModel.genre {
+                    HStack {
+                        Image("Ticket")
+                        Text("\(genre)")
                             .font(.system(size: 10))
                             .foregroundColor(.secondary)
                     }
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                
+                if let releaseDate = movie.releaseDate {
+                    HStack {
+                        Image(systemName: "calendar")
+                            .resizable()
+                            .frame(width: 16, height: 16)
+                            .foregroundColor(.secondary)
+                        Text("\(releaseDate.year)")
+                            .font(.system(size: 10))
+                            .foregroundColor(.secondary)
+                    }
+                }
+                
+                if let runtime = viewModel.runtime {
+                    HStack {
+                        Image(systemName: "clock")
+                            .resizable()
+                            .frame(width: 16, height: 16)
+                            .foregroundColor(.secondary)
+                        Text("Runtime: \(runtime) mins")
+                            .font(.system(size: 10))
+                            .foregroundColor(.secondary)
+                    }
+                } else {
+                    Text("Runtime: N/A")
+                        .font(.system(size: 10))
+                        .foregroundColor(.secondary)
+                }
             }
-            .frame(height: 120)
-            .padding(8)
-            .cornerRadius(8)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical, 4)
         }
-    }
-}
-struct SearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchView()
+        .padding(.horizontal, 8) // Adjusted padding
+        .cornerRadius(8)
+        .onAppear {
+            viewModel.fetchMovieDetails(for: movie)
+        }
     }
 }
