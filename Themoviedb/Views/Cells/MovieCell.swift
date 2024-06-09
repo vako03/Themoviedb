@@ -24,13 +24,22 @@ struct MovieCell: View {
     private var posterView: some View {
         Group {
             if let posterURL = movie.posterURL {
-                AsyncImage(url: posterURL) { image in
-                    image
-                        .resizable()
-                        .cornerRadius(16)
-                } placeholder: {
-                    Color.gray
-                        .cornerRadius(16)
+                AsyncImage(url: posterURL) { phase in
+                    switch phase {
+                    case .empty:
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .cornerRadius(16)
+                    case .failure:
+                        Color.gray
+                            .cornerRadius(16)
+                    @unknown default:
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle())
+                    }
                 }
             } else {
                 Color.gray
@@ -38,14 +47,18 @@ struct MovieCell: View {
             }
         }
     }
+
     
     private var titleView: some View {
         Text(movie.title)
             .font(.system(size: 12))
-            .lineLimit(2)
             .multilineTextAlignment(.center)
-            .minimumScaleFactor(0.5)
+            .lineLimit(2) // Limit to a maximum of two lines
             .padding(.horizontal, 8)
-            .foregroundColor(Color(UIColor.label)) 
+            .frame(width: 100)
+            .foregroundColor(Color(UIColor.label))
     }
+
+
+
 }
