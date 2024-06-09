@@ -19,7 +19,7 @@ struct Movie: Decodable, Identifiable, Hashable {
     let language: String?
     let popularity: Double?
     let voteCount: Int?
-    let originalLanguage: String? 
+    let originalLanguage: String?
     
     
     private enum CodingKeys: String, CodingKey {

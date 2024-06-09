@@ -41,7 +41,9 @@ class SearchViewModel: ObservableObject {
         case .genre:
             urlString += "&searchBy=genre"
         case .releaseYear:
+            // If the selected option is release year, perform search by release year
             guard let year = Int(query) else {
+                // If the query is not a valid year, return empty result
                 self.movies = []
                 return
             }

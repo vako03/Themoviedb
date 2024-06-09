@@ -24,10 +24,12 @@ class MovieDetailsViewModel: ObservableObject {
             
             if let decodedResponse = try? JSONDecoder().decode(MovieDetails.self, from: data) {
                 DispatchQueue.main.async {
+                    // Extract genre
                     if let genres = decodedResponse.genres, let firstGenre = genres.first {
                         self.genre = firstGenre.name
                     }
                     
+                    // Set runtime
                     self.runtime = decodedResponse.runtime
                 }
             }

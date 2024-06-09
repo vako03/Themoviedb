@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainTabView: View {
-    @State private var selection = 0 
+    @State private var selection = 0
     
     var body: some View {
         TabView(selection: $selection) {
@@ -28,7 +28,7 @@ struct MainTabView: View {
                         .foregroundColor(selection == 1 ? Color.blue : Color.gray)
                     Text("Search")
                 }
-                .tag(1) 
+                .tag(1)
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
